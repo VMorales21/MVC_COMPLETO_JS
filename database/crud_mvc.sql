@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS crud_mvc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE crud_mvc;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS horarios; DROP TABLE IF EXISTS materias; DROP TABLE IF EXISTS docentes; DROP TABLE IF EXISTS estudiantes; SET FOREIGN_KEY_CHECKS=1;
+CREATE TABLE estudiantes(id INT AUTO_INCREMENT PRIMARY KEY,matricula VARCHAR(20) UNIQUE NOT NULL,nombre VARCHAR(50) NOT NULL,apellidos VARCHAR(100) NOT NULL,correo VARCHAR(100) NOT NULL,telefono VARCHAR(15),carrera VARCHAR(100) NOT NULL,semestre INT NOT NULL);
+CREATE TABLE materias(id INT AUTO_INCREMENT PRIMARY KEY,clave VARCHAR(20) UNIQUE NOT NULL,nombre VARCHAR(120) NOT NULL,creditos INT NOT NULL,semestre INT NOT NULL);
+CREATE TABLE docentes(id INT AUTO_INCREMENT PRIMARY KEY,numero_empleado VARCHAR(20) UNIQUE NOT NULL,nombre VARCHAR(50) NOT NULL,apellidos VARCHAR(100) NOT NULL,correo VARCHAR(100) NOT NULL,especialidad VARCHAR(120) NOT NULL);
+CREATE TABLE horarios(id INT AUTO_INCREMENT PRIMARY KEY,materia_id INT NOT NULL,docente_id INT NOT NULL,dia VARCHAR(20) NOT NULL,hora_inicio TIME NOT NULL,hora_fin TIME NOT NULL,aula VARCHAR(30) NOT NULL,FOREIGN KEY(materia_id) REFERENCES materias(id),FOREIGN KEY(docente_id) REFERENCES docentes(id));
+INSERT INTO estudiantes(matricula,nombre,apellidos,correo,telefono,carrera,semestre) VALUES('2026001','Juan','Pérez García','juan@gmail.com','2221000001','Ingeniería en Sistemas Computacionales',1),('2026002','María','López Hernández','maria@gmail.com','2221000002','Ingeniería en Sistemas Computacionales',2);
+INSERT INTO materias(clave,nombre,creditos,semestre) VALUES('ISC101','Matemáticas Discretas',5,1),('ISC102','Programación',5,1),('ISC201','Estructuras de Datos',5,2),('ISC301','Programación Web',5,3),('ISC401','Bases de Datos',5,4);
+INSERT INTO docentes(numero_empleado,nombre,apellidos,correo,especialidad) VALUES('DOC001','Laura','Hernández Ruiz','laura@escuela.edu.mx','Programación'),('DOC002','Miguel','Sánchez Pérez','miguel@escuela.edu.mx','Bases de Datos'),('DOC003','Ana','Torres García','ana@escuela.edu.mx','Matemáticas');
+INSERT INTO horarios(materia_id,docente_id,dia,hora_inicio,hora_fin,aula) VALUES(1,3,'Lunes','07:00:00','09:00:00','A-101'),(2,1,'Martes','09:00:00','11:00:00','A-102'),(3,1,'Miércoles','07:00:00','09:00:00','A-103');
